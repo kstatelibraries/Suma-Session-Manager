@@ -1,3 +1,3 @@
 <?
-$sessionmanager_version = "0.2.1";
+$sessionmanager_version = "0.2.2";
 ?>
