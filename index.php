@@ -1,4 +1,4 @@
-<? 
+<?php 
 session_start(); 
 include ("config.php");
 require ("andwherePDO.class.php");
@@ -29,7 +29,7 @@ form { display: inline }
 <script type="text/javascript"
          src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.js">
 </script>
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/<? echo $ui_theme;?>/jquery-ui.css" />
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/<?php echo $ui_theme;?>/jquery-ui.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
 <link rel="stylesheet" type="text/css" href="style.css" type="text/css" />
 
@@ -45,11 +45,11 @@ form { display: inline }
                  });
              $( "#datepicker" ).datepicker({
                  showOn: "button",
-                         <? 
+                         <?php 
                          if ($prevent_datepicker_future || ! isset($prevent_datepicker_future)) {
                          ?>
                          maxDate: new Date,
-                         <?
+                         <?php
                                  }
                          ?>
                          buttonImageOnly: true,
@@ -82,7 +82,7 @@ form { display: inline }
 <div id="wrapper">
 <div id="content">
 <h1>Suma Session Manager</h1>
-<?
+<?php
 $result = CheckInstall();
 $installation_problem = $result['installation_problem'];
 
@@ -123,7 +123,7 @@ if (isset($_REQUEST['date_search'])) {
 
 <div id="tabs">
  <ul>
-    <?
+    <?php
     if (! $installation_problem) {
         print'<li><a href="#tabs-sessions">Sessions</a></li>'.PHP_EOL; 
         if (in_array($_SESSION['current_init'], $one_per_hour_inits)) {
@@ -134,7 +134,7 @@ if (isset($_REQUEST['date_search'])) {
  <li><a href="#tabs-readme">Documentation</a></li>
  </ul>
 
-<?
+<?php
     if (! $installation_problem) {
         print '<div id="tabs-sessions">'.PHP_EOL;
 

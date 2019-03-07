@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Class to handle an arbitraty number of variables to be inserted into a 
  * PDO-style mysql query. Allows output of the PDO-style query string with

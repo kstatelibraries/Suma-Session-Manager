@@ -1,4 +1,4 @@
-<?
+<?php
 function ConnectPDO () {
     $db = new PDO('mysql:'.MYSQL_HOST.'=localhost;dbname='.MYSQL_DATABASE.';charset=utf8', MYSQL_USER, MYSQL_PASSWORD);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -66,7 +66,7 @@ function ShowEntries ($init, $offset=0, $entries_per_page=60, $and_where, $hour_
      <input type="button" id="dp-text" value="Select Any Date" class="button"><input type="hidden" id="datepicker" />
 <input type="hidden" id="date-search" name="date_search" />
 </form>
-  <?      
+  <?php      
         
         while ($myrow = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $headers = array_keys($myrow);
@@ -286,7 +286,6 @@ function RenderMarkdown ($text) {
                      "errors" => $errors);
     return $result;
 } //end CheckInstall
-
 
 
 ?>
