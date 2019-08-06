@@ -27,7 +27,7 @@ form { display: inline }
 .highlight { background-color: yellow }
 </style>
 <script type="text/javascript"
-         src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.js">
+         src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.js">
 </script>
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/<?php echo $ui_theme;?>/jquery-ui.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
