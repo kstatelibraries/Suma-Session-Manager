@@ -3,6 +3,7 @@ define ("DEBUG", false); // if DEBUG==true, display some diagnostic info
 define ("SUMASERVER_URL", ""); // full url with no trailing slash, e.g. http://www.example.com/sumaserver, see note about sumaserver security in README.md file
 define ("SUMA_REPORTS_URL", ""); // full url with no trailing slash, e.g. http://www.example.com/suma/analysis/reports, see note about sumaserver security in README.md file
 define ("MYSQL_HOST", "");     //enter value as second argument
+define ("MYSQL_PORT", "");     //enter value as second argument
 define ("MYSQL_DATABASE", ""); //enter value as second argument
 define ("MYSQL_USER", "");     //enter value as second argument
 define ("MYSQL_PASSWORD", ""); //enter value as second argument
