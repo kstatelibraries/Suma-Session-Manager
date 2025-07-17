@@ -1,8 +1,19 @@
 <?php
-function ConnectPDO () {
-    $db = new PDO('mysql:'.MYSQL_HOST.'=localhost;dbname='.MYSQL_DATABASE.';charset=utf8', MYSQL_USER, MYSQL_PASSWORD);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    return $db;
+function ConnectPDO () : PDO {
+    // Build DSN using configuration constants defined in config.php
+    $dsn = 'mysql:host=' . MYSQL_HOST . ';dbname=' . MYSQL_DATABASE . ';charset=utf8mb4';
+
+    try {
+        $db = new PDO($dsn, MYSQL_USER, MYSQL_PASSWORD, [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ]);
+        return $db;
+    } catch (PDOException $e) {
+        // Reuse existing helper for consistent error display/logging
+        HandleExceptionPDO($e);
+        throw $e; // re-throw so callers can handle if needed
+    }
 }
 function HandleExceptionPDO($e) {
     print '<div class="alert">'.PHP_EOL;
@@ -11,7 +22,7 @@ function HandleExceptionPDO($e) {
     print '</div>'.PHP_EOL;
 }
 
-function ShowEntries ($init, $offset=0, $entries_per_page=60, $and_where, $hour_focus="") { 
+function ShowEntries ($init, $offset=0, $entries_per_page=60, $and_where = null, $hour_focus="") { 
 
     if (is_object($and_where)) {
         $and_where_string = $and_where->AndWhereString();
@@ -227,7 +238,7 @@ $select = "<label for=\"initiative\">Initiative</label> <select name=\"initiativ
 return ($select);
 } //end if good response
 else {
-return '<div class="alert"><h3>Unable to connect to Suma Server</h3><p>Unable to connect to the Suma Server using the url defined as <strong>$sumaserver_url = '.$sumaserver_url.'</strong> in the <strong>config.php</strong> file. Please check this url.</p> <p>A useful test of correctness is this: if you can add <strong>/clientinit</strong> to the url, you should get a list of your suma initiatives, e.g. <a href="'.$url.'">'.$url.'</a>.' . PHP_EOL;
+return '<div class="alert"><h3>Unable to connect to Suma Server</h3><p>Unable to connect to the Suma Server using the url defined as <strong>$sumaserver_url = '.SUMASERVER_URL.'</strong> in the <strong>config.php</strong> file. Please check this url.</p> <p>A useful test of correctness is this: if you can add <strong>/clientinit</strong> to the url, you should get a list of your suma initiatives, e.g. <a href="'.$url.'">'.$url.'</a>.' . PHP_EOL;
 } //end if unable to reach sumaserver
 } //end function SelectInitiative
 

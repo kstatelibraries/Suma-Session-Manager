@@ -5,11 +5,10 @@ require ("andwherePDO.class.php");
 include ("scripts.php");
 
 if (DEBUG === true) {
-  error_reporting(E_WARN);
-  ini_set("display_errors", true);
-
+    error_reporting(E_WARNING);
+    ini_set("display_errors", true);
     var_dump($_REQUEST);
-        print "<p></p>".PHP_EOL;
+    print "<p></p>".PHP_EOL;
 }
 
 if (isset($_REQUEST['set_init'])) {
@@ -99,15 +98,19 @@ if (! $installation_problem) {
 
 $offset = (isset($_REQUEST['offset']) ? $_REQUEST['offset'] : 0);
 
-if ($_REQUEST['action'] == "move_session") {
+// Initialize optional query helpers to prevent undefined-variable notices
+$and_where = null;
+$hour_focus = isset($_REQUEST['hour_focus']) ? $_REQUEST['hour_focus'] : "";
+
+if (isset($_REQUEST['action']) && $_REQUEST['action'] == "move_session") {
     MoveSession($_REQUEST['session_id'], $_REQUEST['transaction_id'], $_REQUEST['time_shift']);
     print '<hr>';
 }
-if ($_REQUEST['action'] == "delete_session") {
+if (isset($_REQUEST['action']) && $_REQUEST['action'] == "delete_session") {
     DeleteUndelete("delete",$_REQUEST['session_id']);
     print '<hr>';
 }
-elseif ($_REQUEST['action'] == "undelete_session") {
+if (isset($_REQUEST['action']) && $_REQUEST['action'] == "undelete_session") {
     DeleteUndelete("undelete",$_REQUEST['session_id']);
     print '<hr>';
 }
@@ -138,7 +141,7 @@ if (isset($_REQUEST['date_search'])) {
     if (! $installation_problem) {
         print '<div id="tabs-sessions">'.PHP_EOL;
 
-        ShowEntries ($_SESSION['current_init'], $offset, $entries_per_page, $and_where, $_REQUEST['hour_focus']);        
+        ShowEntries ($_SESSION['current_init'], $offset, $entries_per_page, $and_where, $hour_focus);        
         print '</div><!--id=tabs-sessions-->'.PHP_EOL;
 
         if (in_array($_SESSION['current_init'], $one_per_hour_inits)) {
