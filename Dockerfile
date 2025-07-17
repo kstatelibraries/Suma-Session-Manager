@@ -3,7 +3,6 @@
 FROM php:8.4-apache
 
 # --- System dependencies & useful PHP extensions --------------------------------
-# You can add or remove extensions as required by your project.
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
         git \
@@ -15,7 +14,6 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists/*
 
 # --- Composer (dependency manager for PHP) ---------------------------------------
-# Use the official composer image as a build stage to copy the binary from.
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # --- Application source ----------------------------------------------------------
