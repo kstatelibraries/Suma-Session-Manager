@@ -121,7 +121,7 @@ function HiddenFieldsForDateSearch() { //used by ShowEntries
 }
 
 function MoveSession($session_id, $transaction_id, $time_shift) {
-    list($action, $hms) = split(" ", $time_shift);
+    list($action, $hms) = preg_split(" ", $time_shift);
     try {
         $db = ConnectPDO();
         
