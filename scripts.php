@@ -11,7 +11,7 @@ function HandleExceptionPDO($e) {
     print '</div>'.PHP_EOL;
 }
 
-function ShowEntries ($init, $offset=0, $entries_per_page=60, $and_where, $hour_focus="") { 
+function ShowEntries ($init, $offset=0, $entries_per_page=60, $and_where="", $hour_focus="") {
 
     if (is_object($and_where)) {
         $and_where_string = $and_where->AndWhereString();
@@ -67,7 +67,9 @@ function ShowEntries ($init, $offset=0, $entries_per_page=60, $and_where, $hour_
 <input type="hidden" id="date-search" name="date_search" />
 </form>
   <?php      
-        
+        $rows = "";
+        $header = "";
+        $headers = array();
         while ($myrow = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $headers = array_keys($myrow);
             if (isset($hour_focus) && (preg_match("/$hour_focus/", $myrow['start']))) {

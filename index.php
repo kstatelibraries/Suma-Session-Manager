@@ -99,15 +99,15 @@ if (! $installation_problem) {
 
 $offset = (isset($_REQUEST['offset']) ? $_REQUEST['offset'] : 0);
 
-if ($_REQUEST['action'] == "move_session") {
+if (isset($_REQUEST['action']) && $_REQUEST['action'] == "move_session") {
     MoveSession($_REQUEST['session_id'], $_REQUEST['transaction_id'], $_REQUEST['time_shift']);
     print '<hr>';
 }
-if ($_REQUEST['action'] == "delete_session") {
+if (isset($_REQUEST['action']) && $_REQUEST['action'] == "delete_session") {
     DeleteUndelete("delete",$_REQUEST['session_id']);
     print '<hr>';
 }
-elseif ($_REQUEST['action'] == "undelete_session") {
+elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == "undelete_session") {
     DeleteUndelete("undelete",$_REQUEST['session_id']);
     print '<hr>';
 }
@@ -137,8 +137,9 @@ if (isset($_REQUEST['date_search'])) {
 <?php
     if (! $installation_problem) {
         print '<div id="tabs-sessions">'.PHP_EOL;
-
-        ShowEntries ($_SESSION['current_init'], $offset, $entries_per_page, $and_where, $_REQUEST['hour_focus']);        
+        if(!isset($and_where)) { $and_where = "";}
+        if(!isset($_REQUEST['hour_focus'])) { $_REQUEST['hour_focus'] = "";}
+        ShowEntries ($_SESSION['current_init'], $offset, $entries_per_page, $and_where, $_REQUEST['hour_focus']);
         print '</div><!--id=tabs-sessions-->'.PHP_EOL;
 
         if (in_array($_SESSION['current_init'], $one_per_hour_inits)) {
