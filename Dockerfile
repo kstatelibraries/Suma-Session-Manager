@@ -2,7 +2,7 @@ FROM php:8.1-apache
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
-    libzip-dev libonig-dev zip unzip curl default-mysql-client && \
+    libzip-dev libonig-dev zip unzip curl default-mysql-client apache2-utils && \
     docker-php-ext-install pdo_mysql mbstring zip && \
     a2enmod rewrite && \
     rm -rf /var/lib/apt/lists/*

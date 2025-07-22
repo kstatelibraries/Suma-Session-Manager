@@ -4,6 +4,16 @@ set -e
 # Paths
 SUMA_DIR="/app/suma-session-manager"
 
+# Optional htpasswd setup if ENABLE_HTPASSWD is true
+if [ -z "$SUMA_ADMIN_USER" ] || [ -z "$SUMA_ADMIN_PASS" ]; then
+  echo "ENABLE_HTPASSWD is true, but SUMA_ADMIN_USER or SUMA_ADMIN_PASS is not set."
+  exit 1
+fi
+
+echo "Creating bcrypt htpasswd file at /app/suma.htpasswd"
+htpasswd -Bbc /app/suma.htpasswd "$SUMA_ADMIN_USER" "$SUMA_ADMIN_PASS"
+chown www-data:www-data /app/suma.htpasswd
+
 # Generate Apache config with environment variables
 cat > /etc/apache2/sites-available/000-default.conf <<EOF
 <VirtualHost *:80>
@@ -17,7 +27,11 @@ cat > /etc/apache2/sites-available/000-default.conf <<EOF
         RewriteEngine On
         RewriteRule ^.*$ - [NC,L]
         RewriteRule ^.*$ index.php [NC,L]
-        Require all granted
+
+        AuthType Basic
+        AuthName "Suma Login"
+        AuthUserFile /app/suma.htpasswd
+        Require valid-user
     </Location>
 
     ErrorLog \${APACHE_LOG_DIR}/error.log
